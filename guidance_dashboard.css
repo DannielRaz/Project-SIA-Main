@@ -1,0 +1,234 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family : 'Times New Roman', Times, serif;
+}
+.banner{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url(bgmain.jpg.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.try{
+    width: 50%;
+    top:50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 25px;
+    margin-top: 50px;
+    margin-right: 160px;
+}
+.menu {
+    list-style-type: none;
+    margin: 5px;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    /* font-size: 17px; */
+}
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 100px;
+}
+.logo{
+    width: 120px;
+    cursor: pointer;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block; 
+    margin: 0 10px;
+    position: relative;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #ef3520;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+}
+
+#home a {
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+}
+
+#list a {
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+}
+
+#add a {
+    color: rgb(14, 11, 11);
+    font-weight: bold;
+    margin-left: 1100px;
+}
+#logout a {
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+}
+#createacc a {
+    color: rgb(14, 11, 11);
+    font-weight: bold;
+    margin-left: 1280px;
+    font-size: 17px;
+}
+
+.main-content {
+    padding: 20px;
+}
+.gui-dashboard{
+    color:#110b0b;
+    background: linear-gradient(rgb(177, 91, 65),white);
+    border-radius: 20px;
+    outline: none;
+    margin:10px;
+}
+.gui-dashboard h2{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 300;
+    margin-bottom: -20px;
+    text-align: middle,center;
+}
+
+.gui-dashboard li a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #c2a5a1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-bottom: -30px;
+}
+.gui-dashboard ul li{
+    margin-bottom: -28px;
+}
+
+.gui-dashboard li a:hover {
+    background-color:#963324;
+}
+.gui-dashboard form{
+    margin-left: 15px;
+    border-radius: 10%;
+    display: flex;
+    margin-top: 20px;
+}
+
+.gui-dashboard input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.gui-dashboard input[type="submit"] {
+    padding: 10px 15px;
+    background-color: #c2a5a1;
+    color: #0e0909;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.gui-dashboard input[type="submit"]:hover {
+    background-color: #963324;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid rgb(220, 220, 220);
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+body {
+    background-color: white;
+}
+
+.no-print {
+    display: none;
+}
+
+
+/* guidance_dashboard.css */
+.form-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.form-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container input[type="submit"] {
+    background-color: #963324;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.table-container {
+    background-color: #fff;
+    border-radius: 10px;
+    
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 8px
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:nth-child(odd) {
+    background-color: #fff;
+}
