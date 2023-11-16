@@ -25,6 +25,7 @@
     padding: 0;
     display: flex;
     justify-content: flex-end;
+    gap: 5vw;
 }
 .navbar{
     width: 85%;
