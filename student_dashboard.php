@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 $servername = "localhost";
 $db_username = "root";
 $db_password = "";
-$dbname = "db_ba31011";
+$dbname = "db_ba3101";
 
 // Create a connection to the database
 $conn = new mysqli($servername, $db_username, $db_password, $dbname);

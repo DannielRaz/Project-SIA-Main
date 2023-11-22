@@ -2,6 +2,9 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $firstname = $_POST['first_name'];
+    $lastname = $_POST['last_name'];
+    
 
     // Your database connection code
     $servername = "localhost";
@@ -15,45 +18,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Set the role to 'guidance'
+    // Set the role to 'admin'
     $role = 'guidance';
 
-    // Determine the table and columns based on the selected role
+    // Determine the tables and columns based on the selected role
     if ($role === 'guidance') {
-        $table_name = 'tb_guidance';
-        $username_column = 'Guidance_User';
-        $password_column = 'Guidance_Password';
+        $guidance_table = 'tb_guidance';
+        $guidance_username_column = 'Guidance_User';
+        $guidance_password_column = 'Guidance_Password';
+        $empid_column = 'empid';
     } else {
         // Handle invalid role
         header("Location: registrationguidance.php?status=invalid_role");
         exit;
     }
 
-    // Check if the username already exists
-    $check_username_sql = "SELECT * FROM $table_name WHERE $username_column='$username'";
-    $check_username_result = $conn->query($check_username_sql);
+    // Start a transaction
+    $conn->begin_transaction();
 
-    if ($check_username_result->num_rows > 0) {
-        // Username already exists, handle accordingly (e.g., redirect with a message)
-        header("Location: registrationguidance.php?status=username_exists");
-        exit;
-    }
-
-    // Insert the new user into the database
-    $insert_sql = "INSERT INTO $table_name ($username_column, $password_column) VALUES ('$username', '$password')";
-    if ($conn->query($insert_sql) === TRUE) {
-        // Registration successful, redirect to login page
-        header("Location: login.html");
-        exit;
-    } else {
-        // Registration failed, handle accordingly
+    // Insert the new user into the admin table
+    $insert_sql_guidance = "INSERT INTO $guidance_table ($guidance_username_column, $guidance_password_column) VALUES ('$username', '$password')";
+    if (!$conn->query($insert_sql_guidance)) {
+        // Rollback the transaction on failure
+        $conn->rollback();
         header("Location: registrationguidance.php?status=registration_failed");
         exit;
     }
 
+    // Get the auto-incremented Admin_ID
+    $guidance_id = $conn->insert_id;
+
+    // Update the empid in tb_admin with the same value as Admin_ID
+    $update_empid_sql = "UPDATE $guidance_table SET $empid_column = '$guidance_id' WHERE Guidance_ID = '$guidance_id'";
+    if (!$conn->query($update_empid_sql)) {
+        // Rollback the transaction on failure
+        $conn->rollback();
+        header("Location: registrationguidance.php?status=registration_failed");
+        exit;
+    }
+
+    // Insert the employee info into tbempinfo with the same empid
+    $empinfo_table = 'tbempinfo';
+    $empinfo_sql = "INSERT INTO $empinfo_table (empid, lastname, firstname, department) VALUES ('$guidance_id', '$lastname', '$firstname', '$department')";
+    if (!$conn->query($empinfo_sql)) {
+        // Rollback the transaction on failure
+        $conn->rollback();
+        header("Location: registrationguidance.php?status=registration_failed");
+        exit;
+    }
+
+    // Commit the transaction
+    $conn->commit();
+
+    // Registration successful, redirect to login page
+    header("Location: login.html");
+    exit;
+
     $conn->close();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +92,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="registration-container">    
         <h2>Create Guidance Account</h2>
         <form action="" method="post">
+            <div class="input-box">
+                <label for="last_name"></label>
+                <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
+            </div>
+
+            <div class="input-box">
+                <label for="first_name"></label>
+                <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
+            </div>
+
+            <div class="input-box">
+                <label for="department"></label>
+                <input type="text" id="department" name="department" placeholder="Department" required>
+            </div>
             <div class="input-box">
                 <label for="username"></label>
                 <input type="text" id="username" name="username" placeholder="Username" required>
