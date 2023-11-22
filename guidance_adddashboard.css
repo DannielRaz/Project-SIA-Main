@@ -167,7 +167,7 @@ body {
     display: none;
 }
 
-/* guidance_dashboard.css */
+/* guidance_adddashboard.css */
 .form-container {
     background-color: #f2f2f2;
     padding: 20px;
@@ -200,6 +200,21 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+.form-container button.form-button:hover {
+    background-color: #74271C; /* Change the color on hover if needed */
+}
+.form-container button.clear-button {
+    background-color: #963324;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button.clear-button:hover {
+    background-color: #74271C; /* Change the color on hover if needed */
+}
 
 .table-container {
     background-color: #fff;
@@ -228,4 +243,41 @@ table tr:nth-child(odd) {
     background-color: #fff;
 }
 /* Style for the "Clear" button */
+
+
+/* Add styles for the labels */
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333; /* Adjust the color as needed */
+}
+
+/* Add styles for the select elements */
+.form-container select {
+    width: 20%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Add specific styles for the "Violation Status" select */
+.form-container label[for="violationStatus"] {
+    color: #030000; /* Adjust the color as needed */
+}
+
+.form-container select#violationStatus {
+    background-color: #fff;
+    color: #333; /* Adjust the color as needed */
+}
+
+/* Add specific styles for the "Violation Offense" select */
+.form-container label[for="violationOffense"] {
+    color: #030000; /* Adjust the color as needed */
+}
+
+.form-container select#violationOffense {
+    background-color: #fff;
+    color: #333; /* Adjust the color as needed */
+}
 

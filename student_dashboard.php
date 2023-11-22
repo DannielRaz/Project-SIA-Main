@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 $servername = "localhost";
 $db_username = "root";
 $db_password = "";
-$dbname = "db_ba3101";
+$dbname = "db_ba31011";
 
 // Create a connection to the database
 $conn = new mysqli($servername, $db_username, $db_password, $dbname);
@@ -20,19 +20,28 @@ if ($conn->connect_error) {
 
 $student_acc_id = $_SESSION['student_acc_id'];
 
-// Fetch student information including the image from the database based on the Student_Acc_ID from the session
-$sql = "SELECT tb_studentinfo.SR_Code, tb_studentinfo.Student_Name, tb_studentinfo.Student_Course, tb_studentinfo.Student_Year, tb_studentinfo.Student_Picture
+// Fetch student information including the image from both tables based on Student_Acc_ID from the session
+$sql = "SELECT tbstudinfo.lastname, tbstudinfo.firstname, tbstudinfo.course,
+               tb_studentinfo.SR_Code, tb_studentinfo.Student_Year, tb_studentinfo.Student_Picture
         FROM tb_studentinfo
+        INNER JOIN tbstudinfo ON tb_studentinfo.studid = tbstudinfo.studid
+        INNER JOIN tb_studentacc ON tb_studentinfo.Student_Acc_ID = tb_studentacc.Student_Acc_ID
         WHERE tb_studentinfo.Student_Acc_ID = $student_acc_id";
 
+
 $result = $conn->query($sql);
+
+if (!$result) {
+    die("Error executing query: " . $conn->error);
+}
 
 if ($result->num_rows == 1) {
     // Fetch and store the student's information in PHP variables
     $row = $result->fetch_assoc();
+    $lastname = $row['lastname'];
+    $firstname = $row['firstname'];
+    $course = $row['course'];
     $srCode = $row['SR_Code'];
-    $name = $row['Student_Name'];
-    $course = $row['Student_Course'];
     $year = $row['Student_Year'];
     $imageData = $row['Student_Picture'];
 
@@ -40,27 +49,28 @@ if ($result->num_rows == 1) {
     $imageData = base64_encode($imageData);
     $imageSrc = "data:image/jpeg;base64," . $imageData;
 } else {
-
-    $srCode = "N/A";
-    $name = "N/A";
+    // Handle the case where no records are found
+    $lastname = "N/A";
+    $firstname = "N/A";
     $course = "N/A";
+    $srCode = "N/A";
     $year = "N/A";
     $imageSrc = "path_to_default_image.jpg"; // Replace with the path to a default image
 }
 
-// Close the database connection
-$conn->close();
-?>
 
+// Now you can use $firstname, $lastname, $course, $srCode, $year, and $imageSrc in your HTML or further processing.
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Student Dashboard</title>
     <link rel="stylesheet" type="text/css" href="student_dashboard.css">
 </head>
 
 <body>
-<div class="banner">
+    <div class="banner">
         <div class="navbar">
             <img src="BSUlogo.png" class="logo">
             <div class="try">
@@ -69,23 +79,25 @@ $conn->close();
             <ul class="menu">
                 <li id="profile"><a href="student_dashboard.php">PROFILE</a></li>
                 <li id="violation"><a href="student_violationlist.php">VIOLATION LIST</a></li>
-                <li id="logout"><a href="login.html">LOGOUT</a></li>      
+                <li id="logout"><a href="login.html">LOGOUT</a></li>
             </ul>
         </div>
 
         <div class="student-info">
-        <div class="student-info-details">
-            <h2>Student Information</h2>
-            <div class="student-image-box">
-            <img src="<?php echo $imageSrc; ?>" alt="Student Image">
+            <div class="student-info-details">
+                <h2>Student Information</h2>
+                    <div class="student-image-box">
+                        <img src="<?php echo $imageSrc; ?>" alt="Student Image">
+                    </div>
+                    <p><strong>SR-Code:</strong> <?php echo $srCode; ?></p>
+                    <p><strong>Lastname:</strong> <?php echo $lastname; ?></p>
+                    <p><strong>Firstname:</strong> <?php echo $firstname; ?></p>
+                    <p><strong>Course:</strong> <?php echo $course; ?></p>
+                    <p><strong>Year:</strong> <?php echo $year; ?></p>
             </div>
-            <p><strong>SR-Code:</strong> <?php echo $srCode; ?></p>
-            <p><strong>Name:</strong> <?php echo $name; ?></p>
-            <p><strong>Course:</strong> <?php echo $course; ?></p>
-            <p><strong>Year:</strong> <?php echo $year; ?></p>
         </div>
-    </div>
 
-</div>
+    </div>
 </body>
+
 </html>

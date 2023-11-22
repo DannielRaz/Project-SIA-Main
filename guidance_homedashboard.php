@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Security Guard with Shotgun (double barrel) Dashboard</title>
+    <title>Guidance Dashboard</title>
     <link rel="stylesheet" type="text/css" href="guidance_homedashboard.css">
 </head>
 <body>
