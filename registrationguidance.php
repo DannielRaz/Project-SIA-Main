@@ -4,7 +4,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $firstname = $_POST['first_name'];
     $lastname = $_POST['last_name'];
-    
 
     // Your database connection code
     $servername = "localhost";
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $guidance_table = 'tb_guidance';
         $guidance_username_column = 'Guidance_User';
         $guidance_password_column = 'Guidance_Password';
-        $empid_column = 'empid';
+        $empid_column = 'empid_gui';
     } else {
         // Handle invalid role
         header("Location: registrationguidance.php?status=invalid_role");
@@ -58,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Insert the employee info into tbempinfo with the same empid
-    $empinfo_table = 'tbempinfo';
-    $empinfo_sql = "INSERT INTO $empinfo_table (empid, lastname, firstname, department) VALUES ('$guidance_id', '$lastname', '$firstname', '$department')";
+    $empinfo_table = 'tbempinfoguidance';
+    $empinfo_sql = "INSERT INTO $empinfo_table (empid_gui, lastname_gui, firstname_gui) VALUES ('$guidance_id', '$lastname', '$firstname')";
     if (!$conn->query($empinfo_sql)) {
         // Rollback the transaction on failure
         $conn->rollback();

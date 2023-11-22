@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 22, 2023 at 09:11 AM
+-- Generation Time: Nov 22, 2023 at 10:30 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `tbempinfo` (
   `firstname` varchar(25) NOT NULL,
   `department` varchar(20) NOT NULL,
   PRIMARY KEY (`empid`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tbempinfo`
@@ -42,6 +42,28 @@ CREATE TABLE IF NOT EXISTS `tbempinfo` (
 
 INSERT INTO `tbempinfo` (`empid`, `lastname`, `firstname`, `department`) VALUES
 (1, 'aguila', 'nina', 'cics');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbempinfoguidance`
+--
+
+DROP TABLE IF EXISTS `tbempinfoguidance`;
+CREATE TABLE IF NOT EXISTS `tbempinfoguidance` (
+  `empid_gui` int NOT NULL,
+  `lastname_gui` varchar(100) NOT NULL,
+  `firstname_gui` varchar(100) NOT NULL,
+  PRIMARY KEY (`empid_gui`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tbempinfoguidance`
+--
+
+INSERT INTO `tbempinfoguidance` (`empid_gui`, `lastname_gui`, `firstname_gui`) VALUES
+(1, 'Guidance_Lastname', 'Guidance_Firstname'),
+(21, 'eeee', 'eee');
 
 -- --------------------------------------------------------
 
@@ -83,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `tb_admin` (
   `empid` int DEFAULT NULL,
   PRIMARY KEY (`Admin_ID`),
   KEY `fk_tb_admin_empid` (`empid`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tb_admin`
@@ -103,16 +125,16 @@ CREATE TABLE IF NOT EXISTS `tb_guidance` (
   `Guidance_ID` int NOT NULL AUTO_INCREMENT,
   `Guidance_User` varchar(50) NOT NULL,
   `Guidance_Password` varchar(50) NOT NULL,
-  `empid` int DEFAULT NULL,
+  `empid_gui` int DEFAULT NULL,
   PRIMARY KEY (`Guidance_ID`),
-  KEY `fk_tb_guidance_empid` (`empid`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_tb_guidance_empid_gui` (`empid_gui`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tb_guidance`
 --
 
-INSERT INTO `tb_guidance` (`Guidance_ID`, `Guidance_User`, `Guidance_Password`, `empid`) VALUES
+INSERT INTO `tb_guidance` (`Guidance_ID`, `Guidance_User`, `Guidance_Password`, `empid_gui`) VALUES
 (1, 'gui_user', 'gui_pass', 1);
 
 -- --------------------------------------------------------

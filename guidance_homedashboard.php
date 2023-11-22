@@ -1,5 +1,53 @@
 
+<?php
+session_start();
 
+$servername = "localhost";
+$db_username = "root";
+$db_password = "";
+$dbname = "db_ba3101";
+
+$conn = new mysqli($servername, $db_username, $db_password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if (!isset($_SESSION['username'])) {
+    header("Location: login.html");
+    exit();
+}
+
+$username = $_SESSION['username'];
+
+// Fetch admin information from tb_admin and tbempinfo tables
+$sql = "SELECT g.Guidance_User, e.lastname_gui, e.firstname_gui
+        FROM tb_guidance g
+        INNER JOIN tbempinfoguidance e ON g.empid_gui = e.empid_gui
+        WHERE g.Guidance_User = '$username'";
+
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Error executing query: " . $conn->error);
+}
+
+if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+   
+    $guidanceUser = $row['Guidance_User'];
+    $lastname = $row['lastname_gui'];
+    $firstname = $row['firstname_gui'];
+} else {
+    // Handle the case where no records are found
+   
+    $guidanceUser = "N/A";
+    $lastname = "N/A";
+    $firstname = "N/A";
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +67,14 @@
             <li id="logout"><a href="login.html">LOGOUT</a></li>
         </ul>
     </div>
-
+    <div class="admin-info">
+        <div class="admin-info-details">
+            <h2>Guidance Information</h2>
+            <p><strong>Guidance User:</strong> <?php echo $guidanceUser; ?></p>
+            <p><strong>Lastname:</strong> <?php echo $lastname; ?></p>
+            <p><strong>Firstname:</strong> <?php echo $firstname; ?></p>
+        </div>
+    </div>
 
     
 </div>
