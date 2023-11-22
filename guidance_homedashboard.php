@@ -21,9 +21,9 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 
 // Fetch admin information from tb_admin and tbempinfo tables
-$sql = "SELECT g.Guidance_User, e.lastname_gui, e.firstname_gui
+$sql = "SELECT g.Guidance_User, e.lastname, e.firstname, e.department
         FROM tb_guidance g
-        INNER JOIN tbempinfoguidance e ON g.empid_gui = e.empid_gui
+        INNER JOIN tbempinfo e ON g.empid = e.empid
         WHERE g.Guidance_User = '$username'";
 
 $result = $conn->query($sql);
@@ -36,14 +36,17 @@ if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
    
     $guidanceUser = $row['Guidance_User'];
-    $lastname = $row['lastname_gui'];
-    $firstname = $row['firstname_gui'];
+    $lastname = $row['lastname'];
+    $firstname = $row['firstname'];
+    $department = $row['department'];
+
 } else {
     // Handle the case where no records are found
    
     $guidanceUser = "N/A";
     $lastname = "N/A";
     $firstname = "N/A";
+    $department = "N/A";
 }
 
 $conn->close();
@@ -73,6 +76,7 @@ $conn->close();
             <p><strong>Guidance User:</strong> <?php echo $guidanceUser; ?></p>
             <p><strong>Lastname:</strong> <?php echo $lastname; ?></p>
             <p><strong>Firstname:</strong> <?php echo $firstname; ?></p>
+            <p><strong>Department:</strong> <?php echo $department; ?></p>
         </div>
     </div>
 
