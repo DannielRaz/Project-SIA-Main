@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 22, 2023 at 11:27 AM
+-- Generation Time: Nov 23, 2023 at 03:40 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `tbempinfo`;
 CREATE TABLE IF NOT EXISTS `tbempinfo` (
-  `empid` int NOT NULL,
+  `empid` int NOT NULL AUTO_INCREMENT,
   `lastname` varchar(25) NOT NULL,
   `firstname` varchar(25) NOT NULL,
   `department` varchar(20) NOT NULL,
   PRIMARY KEY (`empid`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tbempinfo`
@@ -43,8 +43,7 @@ CREATE TABLE IF NOT EXISTS `tbempinfo` (
 INSERT INTO `tbempinfo` (`empid`, `lastname`, `firstname`, `department`) VALUES
 (1, 'aguila', 'nina', 'cics'),
 (2, 'Guidance_lastname', 'Guidance_Firstname', 'CICS'),
-(17, 'test_guidance', 'test_guidance', 'CICS'),
-(16, 'test_admin', 'test_admin', 'CICS');
+(17, 'test_guidance', 'test_guidance', 'CICS');
 
 -- --------------------------------------------------------
 
@@ -80,13 +79,13 @@ INSERT INTO `tbstudinfo` (`studid`, `lastname`, `firstname`, `course`) VALUES
 
 DROP TABLE IF EXISTS `tb_admin`;
 CREATE TABLE IF NOT EXISTS `tb_admin` (
-  `Admin_ID` int NOT NULL AUTO_INCREMENT,
+  `Admin_ID` int NOT NULL,
   `Admin_User` varchar(50) NOT NULL,
   `Admin_Password` varchar(50) NOT NULL,
   `empid` int DEFAULT NULL,
   PRIMARY KEY (`Admin_ID`),
   KEY `fk_tb_admin_empid` (`empid`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tb_admin`
@@ -104,13 +103,13 @@ INSERT INTO `tb_admin` (`Admin_ID`, `Admin_User`, `Admin_Password`, `empid`) VAL
 
 DROP TABLE IF EXISTS `tb_guidance`;
 CREATE TABLE IF NOT EXISTS `tb_guidance` (
-  `Guidance_ID` int NOT NULL AUTO_INCREMENT,
+  `Guidance_ID` int NOT NULL,
   `Guidance_User` varchar(50) NOT NULL,
   `Guidance_Password` varchar(50) NOT NULL,
   `empid` int DEFAULT NULL,
   PRIMARY KEY (`Guidance_ID`),
   KEY `fk_tb_guidance_empid` (`empid`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tb_guidance`
@@ -131,19 +130,21 @@ CREATE TABLE IF NOT EXISTS `tb_studentacc` (
   `Student_Acc_ID` int NOT NULL AUTO_INCREMENT,
   `Student_User` varchar(50) NOT NULL,
   `Student_Password` varchar(50) NOT NULL,
-  PRIMARY KEY (`Student_Acc_ID`)
+  `studid` int DEFAULT NULL,
+  PRIMARY KEY (`Student_Acc_ID`),
+  KEY `fk_tb_studentacc_studid` (`studid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tb_studentacc`
 --
 
-INSERT INTO `tb_studentacc` (`Student_Acc_ID`, `Student_User`, `Student_Password`) VALUES
-(1, 'test_user', 'test_pass'),
-(2, 'raz', 'raz_pass'),
-(3, 'solis', 'solis_pass'),
-(4, 'niel', 'niel_pass'),
-(5, 'alvin', 'alvin_pass');
+INSERT INTO `tb_studentacc` (`Student_Acc_ID`, `Student_User`, `Student_Password`, `studid`) VALUES
+(1, 'test_user', 'test_pass', 1),
+(2, 'raz', 'raz_pass', 2),
+(3, 'solis', 'solis_pass', 3),
+(4, 'niel', 'niel_pass', 4),
+(5, 'alvin', 'alvin_pass', 5);
 
 -- --------------------------------------------------------
 

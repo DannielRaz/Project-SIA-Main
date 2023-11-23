@@ -18,26 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Set the role to 'admin'
-    $role = 'guidance';
-
-    // Determine the tables and columns based on the selected role
-    if ($role === 'guidance') {
-        $guidance_table = 'tb_guidance';
-        $guidance_username_column = 'Guidance_User';
-        $guidance_password_column = 'Guidance_Password';
-        $empid_column = 'empid';
-    } else {
-        // Handle invalid role
-        header("Location: registrationguidance.php?status=invalid_role");
-        exit;
-    }
-
     // Start a transaction
     $conn->begin_transaction();
 
+    // Insert the employee info into tbempinfo to get the auto-incremented empid
+    $empinfo_sql = "INSERT INTO tbempinfo (lastname, firstname, department) VALUES ('$lastname', '$firstname', '$department')";
+    if (!$conn->query($empinfo_sql)) {
+        // Rollback the transaction on failure
+        $conn->rollback();
+        header("Location: registrationguidance.php?status=registration_failed");
+        exit;
+    }
+
+    // Get the auto-incremented empid
+    $empid = $conn->insert_id;
+
     // Insert the new user into the admin table
-    $insert_sql_guidance = "INSERT INTO $guidance_table ($guidance_username_column, $guidance_password_column) VALUES ('$username', '$password')";
+    $insert_sql_guidance = "INSERT INTO tb_guidance (Guidance_User, Guidance_Password, empid) VALUES ('$username', '$password', '$empid')";
     if (!$conn->query($insert_sql_guidance)) {
         // Rollback the transaction on failure
         $conn->rollback();
@@ -45,22 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Get the auto-incremented Admin_ID
-    $guidance_id = $conn->insert_id;
-
-    // Update the empid in tb_admin with the same value as Admin_ID
-    $update_empid_sql = "UPDATE $guidance_table SET $empid_column = '$guidance_id' WHERE Guidance_ID = '$guidance_id'";
-    if (!$conn->query($update_empid_sql)) {
-        // Rollback the transaction on failure
-        $conn->rollback();
-        header("Location: registrationguidance.php?status=registration_failed");
-        exit;
-    }
-
-    // Insert the employee info into tbempinfo with the same empid
-    $empinfo_table = 'tbempinfo';
-    $empinfo_sql = "INSERT INTO $empinfo_table (empid, lastname, firstname, department) VALUES ('$guidance_id', '$lastname', '$firstname', '$department')";
-    if (!$conn->query($empinfo_sql)) {
+    // Update the Admin_ID with the same value as empid
+    $update_guidance_id_sql = "UPDATE tb_guidance SET Guidance_ID = '$empid' WHERE empid = '$empid'";
+    if (!$conn->query($update_guidance_id_sql)) {
         // Rollback the transaction on failure
         $conn->rollback();
         header("Location: registrationguidance.php?status=registration_failed");
@@ -77,6 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
 }
 ?>
+
+
 
 
 

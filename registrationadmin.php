@@ -18,26 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Set the role to 'admin'
-    $role = 'admin';
-
-    // Determine the tables and columns based on the selected role
-    if ($role === 'admin') {
-        $admin_table = 'tb_admin';
-        $admin_username_column = 'Admin_User';
-        $admin_password_column = 'Admin_Password';
-        $empid_column = 'empid';
-    } else {
-        // Handle invalid role
-        header("Location: registrationadmin.php?status=invalid_role");
-        exit;
-    }
-
     // Start a transaction
     $conn->begin_transaction();
 
+    // Insert the employee info into tbempinfo to get the auto-incremented empid
+    $empinfo_sql = "INSERT INTO tbempinfo (lastname, firstname, department) VALUES ('$lastname', '$firstname', '$department')";
+    if (!$conn->query($empinfo_sql)) {
+        // Rollback the transaction on failure
+        $conn->rollback();
+        header("Location: registrationadmin.php?status=registration_failed");
+        exit;
+    }
+
+    // Get the auto-incremented empid
+    $empid = $conn->insert_id;
+
     // Insert the new user into the admin table
-    $insert_sql_admin = "INSERT INTO $admin_table ($admin_username_column, $admin_password_column) VALUES ('$username', '$password')";
+    $insert_sql_admin = "INSERT INTO tb_admin (Admin_User, Admin_Password, empid) VALUES ('$username', '$password', '$empid')";
     if (!$conn->query($insert_sql_admin)) {
         // Rollback the transaction on failure
         $conn->rollback();
@@ -45,22 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Get the auto-incremented Admin_ID
-    $admin_id = $conn->insert_id;
-
-    // Update the empid in tb_admin with the same value as Admin_ID
-    $update_empid_sql = "UPDATE $admin_table SET $empid_column = '$admin_id' WHERE Admin_ID = '$admin_id'";
-    if (!$conn->query($update_empid_sql)) {
-        // Rollback the transaction on failure
-        $conn->rollback();
-        header("Location: registrationadmin.php?status=registration_failed");
-        exit;
-    }
-
-    // Insert the employee info into tbempinfo with the same empid
-    $empinfo_table = 'tbempinfo';
-    $empinfo_sql = "INSERT INTO $empinfo_table (empid, lastname, firstname, department) VALUES ('$admin_id', '$lastname', '$firstname', '$department')";
-    if (!$conn->query($empinfo_sql)) {
+    // Update the Admin_ID with the same value as empid
+    $update_admin_id_sql = "UPDATE tb_admin SET Admin_ID = '$empid' WHERE empid = '$empid'";
+    if (!$conn->query($update_admin_id_sql)) {
         // Rollback the transaction on failure
         $conn->rollback();
         header("Location: registrationadmin.php?status=registration_failed");
@@ -77,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
 }
 ?>
+
 
 
 
