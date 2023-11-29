@@ -86,17 +86,22 @@ if ($result->num_rows == 1) {
         <div class="student-info">
             <div class="student-info-details">
                 <h2>Student Information</h2>
-                    <div class="student-image-box">
-                        <img src="<?php echo $imageSrc; ?>" alt="Student Image">
-                    </div>
+                <div class="student-image-box">
+                    <img src="<?php echo $imageSrc; ?>" alt="Student Image">
+                </div>
+            </div>
+
+            <div class="student-details-box">
+                <h3>Student Details</h3>
+                <div class="details">
                     <p><strong>SR-Code:</strong> <?php echo $srCode; ?></p>
                     <p><strong>Lastname:</strong> <?php echo $lastname; ?></p>
                     <p><strong>Firstname:</strong> <?php echo $firstname; ?></p>
                     <p><strong>Course:</strong> <?php echo $course; ?></p>
                     <p><strong>Year:</strong> <?php echo $year; ?></p>
+                </div>
             </div>
         </div>
-
     </div>
 </body>
 
