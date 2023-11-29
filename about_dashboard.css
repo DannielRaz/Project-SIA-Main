@@ -1,27 +1,29 @@
-
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family : 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif;
 }
-.banner{
-    width:100%;
+
+.banner {
+    width: 100%;
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url(bgmain.jpg.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(bgmain.jpg.jpg);
     background-size: cover;
     background-position: center;
 }
-.try{
+
+.try {
     width: 80%;
-    top:50%;
+    top: 50%;
     transform: translateY(-50%);
     color: #fff;
     font-size: 25px;
     margin-top: 50px;
     margin-left: 20px;
 }
-.navbar{
-    width:85%;
+
+.navbar {
+    width: 85%;
     margin: auto;
     padding: 35px 0;
     display: flex;
@@ -29,6 +31,7 @@
     justify-content: space-between;
     padding: 30px 100px;
 }
+
 .menu {
     list-style-type: none;
     margin: 0;
@@ -36,22 +39,26 @@
     display: flex;
     justify-content: flex-end;
 }
-.logo{
+
+.logo {
     width: 120px;
     cursor: pointer;
 }
-.navbar ul li{
+
+.navbar ul li {
     list-style: none;
-    display: inline-block; 
+    display: inline-block;
     margin: 0 10px;
     position: relative;
 }
-.navbar ul li a{
+
+.navbar ul li a {
     text-decoration: none;
     color: #fff;
     text-transform: uppercase;
 }
-.navbar ul li::after{
+
+.navbar ul li::after {
     content: '';
     height: 3px;
     width: 0;
@@ -61,9 +68,11 @@
     bottom: -5px;
     transition: 0.5s;
 }
-.navbar ul li:hover::after{
+
+.navbar ul li:hover::after {
     width: 100%;
 }
+
 #home a {
     color: rgb(252, 252, 252);
     font-weight: bold;
@@ -81,12 +90,13 @@
 
 .main-content {
     width: 100%;
-    position:absolute;
-    top:60%;
+    position: absolute;
+    top: 60%;
     transform: translateY(-50%);
     text-align: center;
-    color: #000000; 
+    color: #000000;
 }
+
 .content-container {
     display: flex;
     flex-wrap: wrap;
@@ -94,13 +104,18 @@
     align-items: center;
     height: 100%;
 }
+
 .content-box {
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     padding: 20px;
     margin: 20px;
     border: 1px solid #7e7777;
     border-radius: 50px;
     text-align: center;
     max-width: 500px;
+    transition: box-shadow 0.3s ease-in-out; /* Adding transition for smooth effect */
 }
 
+.content-box:hover {
+    box-shadow: rgba(255, 17, 0, 0.4) -5px 5px, rgba(255, 17, 0, 0.4) -10px 10px, rgba(255, 17, 0, 0.4) -15px 15px, rgba(255, 17, 0, 0.4) -20px 20px, rgba(255, 17, 0, 0.4) -25px 25px;
+}
