@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Online Monitoring System For BSU Lipa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="about_dashboard.css">
 </head>
 <body>
     <div class ="banner">
         <div class="navbar">
-            <img src="BSUlogo.png" class="logo">
+        <img src="BSUlogo.png" alt="Batangas State University Logo" class="logo">
             <div class="try"><h2>Batangas State University</h2></div>
         <ul class="menu">
             <li id="home"><a href="main.html">HOME</a></li>
@@ -31,15 +32,6 @@
             <div class="content-box">
                 <h2>Our Vision</h2>
                 <p>We envision a digital campus where information is readily available and accessible, simplifying administrative tasks and enhancing the overall experience for everyone at BSU Lipa.</p>
-            </div>
-
-            <div class="content-box">
-                <h2>Why Choose Us?</h2>
-                <p>With our user-friendly platform, you can:</p>
-                <p>Effortlessly monitor your academic and extracurricular activities.</p>
-                <p>Access important information in one centralized location.</p>
-                <p>Simplify administrative tasks and reduce paperwork.</p>
-                <p>Stay informed and up-to-date with campus events and announcements.</p>
             </div>
 
             <div class="content-box">
